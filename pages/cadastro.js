@@ -35,6 +35,29 @@ export default function Cadastro() {
     mostrarResumo ? setMostrarResumo(false) : router.push('/');
   };
 
+  const fetchCEP = async (cep) => {
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+        
+        console.log('Dados retornados pela API ViaCEP:', data); 
+        
+        if (!data.erro) {
+        setForm(prev => ({
+            ...prev,
+            endereco: data.logradouro || '',
+            bairro: data.bairro || '',
+            cidade: data.localidade || '',
+            uf: data.uf || ''
+        }));
+        } else {
+        console.log('CEP não encontrado');
+        }
+    } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+    }
+    };
+
   return (
     <Box sx={{ textAlign: 'center', padding: 4 }}>
       <Typography variant="h4" gutterBottom>Cadastro de Usuário</Typography>
@@ -85,10 +108,11 @@ export default function Cadastro() {
             name="cep"
             value={form.cep}
             onChange={handleChange}
+            onBlur={(e) => fetchCEP(e.target.value.replace(/\D/g, ''))}
             fullWidth
             margin="normal"
             required
-          />
+            />
           <TextField
             label="Endereço"
             name="endereco"
