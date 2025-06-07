@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Paper, CircularProgress } from '@mui/material';
+import { useState } from 'react';
+import { TextField, Button, Box, Typography, Container, CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 
 export default function Cadastro() {
@@ -41,8 +41,8 @@ export default function Cadastro() {
           uf: data.uf || ''
         }));
       } else {
-            console.log('CEP não encontrado');
-        }
+        console.log('CEP não encontrado');
+      }
     } catch (error) {
       console.error('Erro ao buscar CEP:', error);
     } finally {
@@ -54,7 +54,6 @@ export default function Cadastro() {
     const cep = e.target.value.replace(/\D/g, '');
     handleChange({ target: { name: 'cep', value: cep } });
     
-    // Busca automática quando CEP está completo
     if (cep.length === 8) {
       fetchCEP(cep);
     }
@@ -70,132 +69,254 @@ export default function Cadastro() {
   };
 
   return (
-    <Box sx={{ textAlign: 'center', padding: 4 }}>
-      <Typography variant="h4" gutterBottom>Cadastro de Usuário</Typography>
+    <Container maxWidth="100vw" sx={{ 
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      padding: 4
+    }}>
+      <Box sx={{ 
+        textAlign: 'center',
+        width: '100%',
+        maxWidth: 800,
+        padding: 4,
+        borderRadius: 2,
+        boxShadow: 3,
+        backgroundColor: 'white'
+      }}>
+        <Typography 
+          variant="h3" 
+          gutterBottom 
+          sx={{ 
+            fontWeight: 'bold',
+            color: 'black',
+            marginBottom: 4
+          }}
+        >
+          Cadastro de Usuário
+        </Typography>
 
-      {!mostrarResumo ? (
-        <form onSubmit={handleContinue}>
-          <TextField
-            label="Nome Completo"
-            name="nome"
-            value={form.nome}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="E-mail"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Data de Nascimento"
-            name="dataNascimento"
-            type="date"
-            value={form.dataNascimento}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-            required
-          />
-          <TextField
-            label="Celular"
-            name="celular"
-            value={form.celular}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="CEP"
-            name="cep"
-            value={form.cep}
-            onChange={handleCEPChange}
-            fullWidth
-            margin="normal"
-            required
-            inputProps={{ maxLength: 9 }}
-            helperText={loadingCEP && 'Buscando endereço...'}
-            InputProps={{
-              endAdornment: loadingCEP ? <CircularProgress size={20} /> : null
-            }}
-          />
-          <TextField
-            label="Endereço"
-            name="endereco"
-            value={form.endereco}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Número"
-            name="numero"
-            value={form.numero}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Bairro"
-            name="bairro"
-            value={form.bairro}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Cidade"
-            name="cidade"
-            value={form.cidade}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="UF"
-            name="uf"
-            value={form.uf}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
+        {!mostrarResumo ? (
+          <form onSubmit={handleContinue}>
+            {/* Linha 1: Nome completo */}
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Nome Completo"
+                  name="nome"
+                  value={form.nome}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+            </Grid>
 
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-            <Button variant="outlined" color="secondary" onClick={handleBack}>
+            {/* Linha 2: Email e Celular */}
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="E-mail"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Celular"
+                  name="celular"
+                  value={form.celular}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            {/* Linha 3: Data de Nascimento */}
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Data de Nascimento"
+                  name="dataNascimento"
+                  type="date"
+                  value={form.dataNascimento}
+                  onChange={handleChange}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            {/* Linha 4: CEP */}
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={12}>
+                <TextField
+                  label="CEP"
+                  name="cep"
+                  value={form.cep}
+                  onChange={handleCEPChange}
+                  fullWidth
+                  required
+                  inputProps={{ maxLength: 9 }}
+                  helperText={loadingCEP && 'Buscando endereço...'}
+                  InputProps={{
+                    endAdornment: loadingCEP ? <CircularProgress size={20} /> : null
+                  }}
+                />
+              </Grid>
+            </Grid>
+
+            {/* Linha 5: Endereço, Número e Bairro */}
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+                <Grid item xs={12} sm={8} md={6}>
+                    <TextField
+                    label="Endereço"
+                    name="endereco"
+                    value={form.endereco}
+                    onChange={handleChange}
+                    fullWidth
+                    required
+                    />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                    label="Número"
+                    name="numero"
+                    value={form.numero}
+                    onChange={handleChange}
+                    fullWidth
+                    required
+                    />
+                </Grid>
+                <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                    label="Bairro"
+                    name="bairro"
+                    value={form.bairro}
+                    onChange={handleChange}
+                    fullWidth
+                    required
+                    />
+                </Grid>
+            </Grid>
+
+            {/* Linha 6: Cidade e UF */}
+            <Grid container spacing={2} sx={{ mb: 4 }}>
+              <Grid item xs={12} sm={8}>
+                <TextField
+                  label="Cidade"
+                  name="cidade"
+                  value={form.cidade}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  label="UF"
+                  name="UF"
+                  value={form.uf}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            {/* Botões */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button 
+                variant="outlined" 
+                color="secondary" 
+                onClick={handleBack}
+                sx={{
+                  padding: '12px 32px',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  borderRadius: 1
+                }}
+              >
+                Voltar
+              </Button>
+              <Button 
+                type="submit" 
+                variant="contained" 
+                color="primary"
+                sx={{
+                  padding: '12px 32px',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  borderRadius: 1
+                }}
+              >
+                Continuar
+              </Button>
+            </Box>
+          </form>
+        ) : (
+          <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', color: 'black' }}>
+              Resumo dos dados:
+            </Typography>
+            
+            <Box sx={{ 
+              p: 3, 
+              mb: 3,
+              borderRadius: 2,
+              boxShadow: 1,
+              backgroundColor: 'background.paper'
+            }}>
+              {Object.entries(form).map(([key, value]) => {
+                // Mapeamento dos rótulos
+                const labels = {
+                    nome: 'Nome',
+                    email: 'E-mail',
+                    dataNascimento: 'Data de Nascimento',
+                    celular: 'Celular',
+                    cep: 'CEP',
+                    endereco: 'Endereço',
+                    numero: 'Número',
+                    bairro: 'Bairro',
+                    cidade: 'Cidade',
+                    uf: 'UF'
+                };
+
+                return (
+                    <Typography key={key} sx={{ mb: 1 }}>
+                    <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                        {labels[key] || key}: {/* Usa o rótulo mapeado ou a chave original */}
+                    </Box> <Box component="span" sx={{ color: 'black' }}>{value || 'Não informado'}</Box>
+                    </Typography>
+                );
+                })}
+            </Box>
+            
+            <Button 
+              variant="outlined" 
+              color="secondary" 
+              onClick={handleBack}
+              sx={{
+                padding: '12px 32px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                borderRadius: 1
+              }}
+            >
               Voltar
             </Button>
-            <Button type="submit" variant="contained" color="primary">
-              Continuar
-            </Button>
           </Box>
-        </form>
-      ) : (
-        <>
-          <Paper elevation={3} sx={{ padding: 3, marginTop: 2 }}>
-            <Typography variant="h6">Resumo dos dados:</Typography>
-            {Object.entries(form).map(([key, value]) => (
-              <Typography key={key}><strong>{key}:</strong> {value}</Typography>
-            ))}
-          </Paper>
-          <Button variant="outlined" color="secondary" sx={{ marginTop: 3 }} onClick={handleBack}>
-            Voltar
-          </Button>
-        </>
-      )}
-    </Box>
+        )}
+      </Box>
+    </Container>
   );
 }
