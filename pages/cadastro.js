@@ -1,6 +1,6 @@
 // pages/cadastro.js
 import { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, Paper } from '@mui/material';
 import { useRouter } from 'next/router';
 
 export default function Cadastro() {
@@ -9,6 +9,8 @@ export default function Cadastro() {
     email: '',
     cep: '',
   });
+
+  const [mostrarResumo, setMostrarResumo] = useState(false); // Controla se mostra o resumo ou o formulário
 
   const router = useRouter();
 
@@ -20,15 +22,17 @@ export default function Cadastro() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleContinue = (e) => {
     e.preventDefault();
-    console.log('Dados enviados:', form);
-    // Redireciona para a home após o envio
-    router.push('/');
+    setMostrarResumo(true);
   };
 
   const handleBack = () => {
-    router.push('/');
+    if (mostrarResumo) {
+      setMostrarResumo(false); // Volta para o formulário
+    } else {
+      router.push('/'); // Volta para a home
+    }
   };
 
   return (
@@ -37,45 +41,61 @@ export default function Cadastro() {
         Cadastro de Usuário
       </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Nome"
-          name="nome"
-          value={form.nome}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="E-mail"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="CEP"
-          name="cep"
-          value={form.cep}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
+      {!mostrarResumo ? (
+        <form onSubmit={handleContinue}>
+          <TextField
+            label="Nome"
+            name="nome"
+            value={form.nome}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="E-mail"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="CEP"
+            name="cep"
+            value={form.cep}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={handleBack}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+            <Button variant="outlined" color="secondary" onClick={handleBack}>
+              Voltar
+            </Button>
+            <Button type="submit" variant="contained" color="primary">
+              Continuar
+            </Button>
+          </Box>
+        </form>
+      ) : (
+        <>
+          <Paper elevation={3} sx={{ padding: 3, marginTop: 2 }}>
+            <Typography variant="h6">Resumo dos dados:</Typography>
+            <Typography><strong>Nome:</strong> {form.nome}</Typography>
+            <Typography><strong>E-mail:</strong> {form.email}</Typography>
+            <Typography><strong>CEP:</strong> {form.cep}</Typography>
+          </Paper>
+
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ marginTop: 3 }}
+            onClick={handleBack}
+          >
             Voltar
           </Button>
-          <Button type="submit" variant="contained" color="primary">
-            Enviar
-          </Button>
-        </Box>
-      </form>
+        </>
+      )}
     </Box>
   );
 }
