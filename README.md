@@ -53,3 +53,8 @@ Escolhido por sua sintaxe simples, controle de erros embutido e ampla adoção n
 Criada com **React Native (Expo)**, com tela de entrada de CEP e exibição dos dados de endereço vindos da API ViaCEP.
 
 ---
+## 👤 Autor
+
+**Wagner C. Lessa**  
+
+🗓️ *Criado em 6 de jun. 2025*
