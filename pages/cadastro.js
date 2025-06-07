@@ -7,19 +7,23 @@ export default function Cadastro() {
   const [form, setForm] = useState({
     nome: '',
     email: '',
+    dataNascimento: '',
+    celular: '',
     cep: '',
+    endereco: '',
+    numero: '',
+    bairro: '',
+    cidade: '',
+    uf: ''
   });
 
-  const [mostrarResumo, setMostrarResumo] = useState(false); // Controla se mostra o resumo ou o formulário
+  const [mostrarResumo, setMostrarResumo] = useState(false);
 
   const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleContinue = (e) => {
@@ -28,36 +32,53 @@ export default function Cadastro() {
   };
 
   const handleBack = () => {
-    if (mostrarResumo) {
-      setMostrarResumo(false); // Volta para o formulário
-    } else {
-      router.push('/'); // Volta para a home
-    }
+    mostrarResumo ? setMostrarResumo(false) : router.push('/');
   };
 
   return (
     <Box sx={{ textAlign: 'center', padding: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Cadastro de Usuário
-      </Typography>
+      <Typography variant="h4" gutterBottom>Cadastro de Usuário</Typography>
 
       {!mostrarResumo ? (
         <form onSubmit={handleContinue}>
           <TextField
-            label="Nome"
+            label="Nome Completo"
             name="nome"
             value={form.nome}
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
           <TextField
             label="E-mail"
             name="email"
+            type="email"
             value={form.email}
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
+          />
+          <TextField
+            label="Data de Nascimento"
+            name="dataNascimento"
+            type="date"
+            value={form.dataNascimento}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{ shrink: true }}
+            required
+          />
+          <TextField
+            label="Celular"
+            name="celular"
+            value={form.celular}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
           />
           <TextField
             label="CEP"
@@ -66,6 +87,52 @@ export default function Cadastro() {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
+          />
+          <TextField
+            label="Endereço"
+            name="endereco"
+            value={form.endereco}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Número"
+            name="numero"
+            value={form.numero}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Bairro"
+            name="bairro"
+            value={form.bairro}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Cidade"
+            name="cidade"
+            value={form.cidade}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="UF"
+            name="uf"
+            value={form.uf}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
           />
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
@@ -81,17 +148,11 @@ export default function Cadastro() {
         <>
           <Paper elevation={3} sx={{ padding: 3, marginTop: 2 }}>
             <Typography variant="h6">Resumo dos dados:</Typography>
-            <Typography><strong>Nome:</strong> {form.nome}</Typography>
-            <Typography><strong>E-mail:</strong> {form.email}</Typography>
-            <Typography><strong>CEP:</strong> {form.cep}</Typography>
+            {Object.entries(form).map(([key, value]) => (
+              <Typography key={key}><strong>{key}:</strong> {value}</Typography>
+            ))}
           </Paper>
-
-          <Button
-            variant="outlined"
-            color="secondary"
-            sx={{ marginTop: 3 }}
-            onClick={handleBack}
-          >
+          <Button variant="outlined" color="secondary" sx={{ marginTop: 3 }} onClick={handleBack}>
             Voltar
           </Button>
         </>
