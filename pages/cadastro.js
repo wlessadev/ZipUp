@@ -1,6 +1,5 @@
-// pages/cadastro.js
-import { useState } from 'react';
-import { TextField, Button, Box, Typography, Paper } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { TextField, Button, Box, Typography, Paper, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router';
 
 export default function Cadastro() {
@@ -16,14 +15,49 @@ export default function Cadastro() {
     cidade: '',
     uf: ''
   });
-
+  const [loadingCEP, setLoadingCEP] = useState(false);
   const [mostrarResumo, setMostrarResumo] = useState(false);
-
   const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const fetchCEP = async (cep) => {
+    if (cep.length !== 8) return;
+    
+    setLoadingCEP(true);
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+      
+      if (!data.erro) {
+        setForm(prev => ({
+          ...prev,
+          endereco: data.logradouro || '',
+          bairro: data.bairro || '',
+          cidade: data.localidade || '',
+          uf: data.uf || ''
+        }));
+      } else {
+            console.log('CEP não encontrado');
+        }
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+    } finally {
+      setLoadingCEP(false);
+    }
+  };
+
+  const handleCEPChange = (e) => {
+    const cep = e.target.value.replace(/\D/g, '');
+    handleChange({ target: { name: 'cep', value: cep } });
+    
+    // Busca automática quando CEP está completo
+    if (cep.length === 8) {
+      fetchCEP(cep);
+    }
   };
 
   const handleContinue = (e) => {
@@ -34,29 +68,6 @@ export default function Cadastro() {
   const handleBack = () => {
     mostrarResumo ? setMostrarResumo(false) : router.push('/');
   };
-
-  const fetchCEP = async (cep) => {
-    try {
-        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await response.json();
-        
-        console.log('Dados retornados pela API ViaCEP:', data); 
-        
-        if (!data.erro) {
-        setForm(prev => ({
-            ...prev,
-            endereco: data.logradouro || '',
-            bairro: data.bairro || '',
-            cidade: data.localidade || '',
-            uf: data.uf || ''
-        }));
-        } else {
-        console.log('CEP não encontrado');
-        }
-    } catch (error) {
-        console.error('Erro ao buscar CEP:', error);
-    }
-    };
 
   return (
     <Box sx={{ textAlign: 'center', padding: 4 }}>
@@ -107,12 +118,16 @@ export default function Cadastro() {
             label="CEP"
             name="cep"
             value={form.cep}
-            onChange={handleChange}
-            onBlur={(e) => fetchCEP(e.target.value.replace(/\D/g, ''))}
+            onChange={handleCEPChange}
             fullWidth
             margin="normal"
             required
-            />
+            inputProps={{ maxLength: 9 }}
+            helperText={loadingCEP && 'Buscando endereço...'}
+            InputProps={{
+              endAdornment: loadingCEP ? <CircularProgress size={20} /> : null
+            }}
+          />
           <TextField
             label="Endereço"
             name="endereco"
