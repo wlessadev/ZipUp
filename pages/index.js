@@ -3,16 +3,25 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [currentTime, setCurrentTime] = useState(null);
   const [currentDate, setCurrentDate] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Atualiza a data quando o componente monta
-    setCurrentDate(new Date().toLocaleDateString());
+    // Atualiza hora e data a cada segundo
+    const updateDateTime = () => {
+      setCurrentTime(new Date().toLocaleTimeString());
+      setCurrentDate(new Date().toLocaleDateString());
+    };
+    
+    updateDateTime(); // Chamada inicial
+    const interval = setInterval(updateDateTime, 1000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const handleRegisterClick = () => {
-    //router.push('/cadastro');
+    router.push('/cadastro');
   };
 
   return (
@@ -21,7 +30,7 @@ export default function Home() {
         Bem-vindo ao ZipUp!
       </Typography>
       <Typography variant="h5" gutterBottom>
-        Hoje é {currentDate || '--/--/----'}
+        Que bom te ver por aqui! Agora são {currentTime || '--:--:--'} e a data de hoje é {currentDate || '--/--/----'}.
       </Typography>
       <Typography variant="body1" sx={{ marginBottom: 2 }}>
         Aproveite o seu dia e não deixe de se cadastrar para começar a usar o ZipUp!
