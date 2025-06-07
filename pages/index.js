@@ -1,10 +1,16 @@
 import { Box, Typography, Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [currentDate, setCurrentDate] = useState(null);
   const router = useRouter();
 
-  // Função para navegar para a página de cadastro
+  useEffect(() => {
+    // Atualiza a data quando o componente monta
+    setCurrentDate(new Date().toLocaleDateString());
+  }, []);
+
   const handleRegisterClick = () => {
     //router.push('/cadastro');
   };
@@ -14,11 +20,13 @@ export default function Home() {
       <Typography variant="h3" gutterBottom>
         Bem-vindo ao ZipUp!
       </Typography>
+      <Typography variant="h5" gutterBottom>
+        Hoje é {currentDate || '--/--/----'}
+      </Typography>
       <Typography variant="body1" sx={{ marginBottom: 2 }}>
         Aproveite o seu dia e não deixe de se cadastrar para começar a usar o ZipUp!
       </Typography>
 
-      {/* Botão de Cadastro */}
       <Button
         variant="contained"
         color="primary"
