@@ -65,7 +65,7 @@ export default function Home() {
           <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
             {isClient && currentTime ? currentTime : '--:--:--'}
           </Box>{' '}
-          e a data de hoje é{' '}
+          do dia{' '}
           <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
             {isClient && currentDate ? currentDate : '--/--/----'}
           </Box>.
