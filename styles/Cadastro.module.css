@@ -40,9 +40,21 @@
   font-size: 0.875rem;
 }
 
-.readOnlyInput .MuiInputBase-input {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
+.readOnlyField {
+  background-color: #f5f5f5; /* Cor de fundo mais escura */
+  border-radius: 4px;
+}
+
+.readOnlyField .MuiInputBase-root {
+  background-color: #f5f5f5; /* Garante que o input interno também tenha a cor */
+}
+
+.readOnlyField .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(0, 0, 0, 0.23); /* Mantém a borda padrão */
+}
+
+.readOnlyLabel {
+  color: rgba(0, 0, 0, 0.6); /* Cor mais suave para o label */
 }
 
 .resumeBox {

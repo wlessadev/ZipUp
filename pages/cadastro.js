@@ -367,7 +367,10 @@ export default function Cadastro() {
                         readOnly: true,
                         sx: { pointerEvents: 'none' }
                       }}
-                      className={styles.readOnlyInput}
+                      className={styles.readOnlyField}
+                      InputLabelProps={{
+                        className: styles.readOnlyLabel
+                      }}
                     />
                   )}
                 />
@@ -420,7 +423,10 @@ export default function Cadastro() {
                         readOnly: true,
                         sx: { pointerEvents: 'none' }
                       }}
-                      className={styles.readOnlyInput}
+                      className={styles.readOnlyField}
+                      InputLabelProps={{
+                        className: styles.readOnlyLabel
+                      }}
                     />
                   )}
                 />
@@ -445,7 +451,10 @@ export default function Cadastro() {
                         readOnly: true,
                         sx: { pointerEvents: 'none' }
                       }}
-                      className={styles.readOnlyInput}
+                      className={styles.readOnlyField}
+                      InputLabelProps={{
+                        className: styles.readOnlyLabel
+                      }}
                     />
                   )}
                 />
@@ -467,7 +476,10 @@ export default function Cadastro() {
                         readOnly: true,
                         sx: { pointerEvents: 'none' }
                       }}
-                      className={styles.readOnlyInput}
+                      className={styles.readOnlyField}
+                      InputLabelProps={{
+                        className: styles.readOnlyLabel
+                      }}
                     />
                   )}
                 />
