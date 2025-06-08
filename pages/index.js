@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useRouter } from 'next/router';
+import CartoonPresenter from '../components/CartoonPresenter'; // Importando o componente CartoonPresenter
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(null);
@@ -98,6 +99,7 @@ export default function Home() {
           Cadastre-se agora
         </Button>
       </Box>
+          <CartoonPresenter/>
     </Container>
   );
 }

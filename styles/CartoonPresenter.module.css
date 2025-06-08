@@ -1,0 +1,23 @@
+.presenterContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  height: 200px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.presenterImage {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%);
+  transition: all 0.3s ease;
+}
+
+.presenterImage:hover {
+  transform: translateX(-10px);
+}
