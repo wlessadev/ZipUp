@@ -15,6 +15,7 @@ export default function Cadastro() {
       cep: '',
       endereco: '',
       numero: '',
+      complemento: '',
       bairro: '',
       cidade: '',
       uf: ''
@@ -167,6 +168,8 @@ export default function Cadastro() {
       valorFormatado = formatarData(value);
     } else if (key === 'cep') {
       valorFormatado = formatarCEP(value);
+    } else if (key === 'complemento') {
+      return value || 'Não informado';
     }
 
     return valorFormatado;
@@ -408,6 +411,29 @@ export default function Cadastro() {
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
                 <Controller
+                  name="complemento"
+                  control={control}
+                  rules={{
+                    validate: (value) => {
+                      if (value && !/[a-zA-Z]/.test(value)) {
+                        return 'O complemento deve conter pelo menos uma letra';
+                      }
+                      return true;
+                    }
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="Complemento (opcional)"
+                      fullWidth
+                      error={!!errors.complemento}
+                      helperText={errors.complemento?.message}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+                <Controller
                   name="bairro"
                   control={control}
                   rules={{ required: 'Bairro é obrigatório' }}
@@ -521,6 +547,7 @@ export default function Cadastro() {
                   cep: 'CEP',
                   endereco: 'Endereço',
                   numero: 'Número',
+                  complemento: 'Complemento',
                   bairro: 'Bairro',
                   cidade: 'Cidade',
                   uf: 'UF'
