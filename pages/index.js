@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import CartoonPresenter from '../components/CartoonPresenter'; // Importando o componente CartoonPresenter
+import Image from 'next/image'; // Importe o componente Image do Next
+
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(null);
@@ -42,17 +44,42 @@ export default function Home() {
         boxShadow: 3,
         backgroundColor: 'white'
       }}>
-        <Typography 
-          variant="h3" 
-          gutterBottom 
-          sx={{ 
-            fontWeight: 'bold',
-            color: 'black',
-            marginBottom: 4
-          }}
-        >
-          Bem-vindo ao ZipUp!
-        </Typography>
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 1,
+          marginBottom: 4
+        }}>
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              fontWeight: 'bold',
+              color: 'black',
+            }}
+          >
+            Bem-vindo ao
+          </Typography>
+          {/* Substitua pelo caminho correto da sua logo */}
+          <Image 
+            src="/images/Logo_ZipUp.png" // caminho para sua imagem
+            alt="ZipUp Logo"
+            width={120} // ajuste conforme necessário
+            height={120} // ajuste conforme necessário
+            style={{
+              objectFit: 'contain',
+              marginLeft: '8px' // ajuste o espaçamento
+            }}
+          />
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              fontWeight: 'bold',
+              color: 'black',
+            }}
+          >!
+          </Typography>
+        </Box>
         
         <Typography 
           variant="h5" 
