@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useRouter } from 'next/router';
-import CartoonPresenter from '../components/CartoonPresenter'; // Importando o componente CartoonPresenter
-import Image from 'next/image'; // Importe o componente Image do Next
-
+import CartoonPresenter from '../components/CartoonPresenter';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css'; 
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(null);
@@ -26,87 +26,37 @@ export default function Home() {
   };
 
   return (
-    <Container maxWidth="100vw" sx={{ 
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      padding: 4
-    }}>
-      <Box sx={{ 
-        textAlign: 'center',
-        width: '100%',
-        maxWidth: 800,
-        padding: 4,
-        borderRadius: 2,
-        boxShadow: 3,
-        backgroundColor: 'white'
-      }}>
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 1,
-          marginBottom: 4
-        }}>
-          <Typography 
-            variant="h3" 
-            sx={{ 
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >
+    <Container maxWidth="100vw" className={styles.container}>
+      <Box className={styles.contentBox}>
+        <Box className={styles.logoContainer}>
+          <Typography variant="h3" className={styles.title}>
             Bem-vindo ao
           </Typography>
-          {/* Substitua pelo caminho correto da sua logo */}
           <Image 
-            src="/images/Logo_ZipUp.png" // caminho para sua imagem
+            src="/images/Logo_ZipUp.png"
             alt="ZipUp Logo"
-            width={120} // ajuste conforme necessário
-            height={120} // ajuste conforme necessário
+            width={120}
+            height={120}
             style={{
               objectFit: 'contain',
-              marginLeft: '8px' // ajuste o espaçamento
+              marginLeft: '8px'
             }}
           />
-          <Typography 
-            variant="h3" 
-            sx={{ 
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >!
-          </Typography>
+          <Typography variant="h3" className={styles.title}>!</Typography>
         </Box>
         
-        <Typography 
-          variant="h5" 
-          gutterBottom 
-          sx={{ 
-            color: 'black',
-            marginBottom: 3
-          }}
-        >
+        <Typography variant="h5" gutterBottom className={styles.subtitle}>
           Que bom te ver por aqui! Agora são{' '}
-          <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+          <Box component="span" className={styles.timeText}>
             {isClient && currentTime ? currentTime : '--:--:--'}
           </Box>{' '}
           do dia{' '}
-          <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+          <Box component="span" className={styles.timeText}>
             {isClient && currentDate ? currentDate : '--/--/----'}
           </Box>.
         </Typography>
         
-        <Typography 
-          variant="body1" 
-          sx={{ 
-            color: 'text.secondary',
-            marginBottom: 4,
-            fontSize: '1.1rem'
-          }}
-        >
+        <Typography variant="body1" className={styles.description}>
           Não deixe de se cadastrar para começar a usar o ZipUp!
         </Typography>
 
@@ -114,19 +64,13 @@ export default function Home() {
           variant="contained"
           color="primary"
           size="large"
-          sx={{ 
-            marginTop: 2,
-            padding: '12px 32px',
-            fontSize: '1.1rem',
-            fontWeight: 'bold',
-            borderRadius: 1
-          }}
+          className={styles.registerButton}
           onClick={handleRegisterClick}
         >
           Cadastre-se agora
         </Button>
       </Box>
-          <CartoonPresenter/>
+      <CartoonPresenter/>
     </Container>
   );
 }
