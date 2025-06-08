@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography, Container, CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
+import axios from 'axios'; // Importando o axios
 import styles from '../styles/Cadastro.module.css';
 
 export default function Cadastro() {
@@ -67,8 +68,8 @@ export default function Cadastro() {
     setCepError(false);
     
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const data = await response.json();
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = response.data;
       
       if (!data.erro) {
         setForm(prev => ({
