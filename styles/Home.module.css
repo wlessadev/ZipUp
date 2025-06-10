@@ -1,21 +1,79 @@
 .container {
+  position: relative;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-image: url("/images/batimetria-background.jpg");
   padding: 32px;
+  overflow: hidden;
+}
+
+.gradientLayerOne,
+.gradientLayerTwo,
+.gradientLayerThree,
+.gradientLayerFour {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gradientLayerOne {
+  background: linear-gradient(-35deg, #25B4B0,#113981, #25B4B0);
+  opacity: 0.60;
+}
+
+.gradientLayerTwo {
+  background: linear-gradient(-125deg, #25B4B080,#11398125, #25B4B040);
+  opacity: 0.60;
+}
+
+.gradientLayerThree {
+  background: linear-gradient(to right, #FFFFFF, #888888, #44444450, #00000000);
+  opacity: 0.60;
+}
+.gradientLayerFour {
+  background: #000000;
+  opacity: 0.50;
 }
 
 .contentBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  width: 100%;
-  max-width: 800px;
+  font-family: 'Inter', sans-serif;
+  width: 33.75rem;
+  height: 45rem;
   padding: 32px;
-  border-radius: 8px;
-  box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  border-radius: 16px;
+  background: #ffffff10;
+  box-shadow: 11px 11px 23px rgba(0, 0, 0, 0.25), 
+            0px 4px 42px rgba(0, 0, 0, 0.25);
+  color: white;
+  transform: translateX(-22rem);
+  overflow: hidden;
+}
+
+.contentBox::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, #040C1B00, #11398199);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.headerBox,
+.dateBox {
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 .logoContainer {
@@ -23,34 +81,88 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
-.title {
-  font-weight: bold;
-  color: black;
+.titleGroup {
+  display: flex;
+  align-items: flex-end;
+  justify-self: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  margin-bottom: 1.8rem;
+}
+
+.titleText {
+  font-weight: 900;
+  font-size: 2.25rem;
+  white-space: nowrap;
+  line-height: 1.15;
+  color: white;
+}
+
+.dateBox {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 16px;
+  text-align: center;
+  z-index: 1;
 }
 
 .timeText {
   font-weight: bold;
-  color: #1976d2; /* primary.main color */
+  color: #FFD640;
 }
 
 .subtitle {
-  color: black;
-  margin-bottom: 24px;
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 
 .description {
-  color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 32px;
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+  font-size: 1.05rem;
 }
 
 .registerButton {
   margin-top: 16px;
-  padding: 12px 32px;
-  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  height: 3.2rem;
+  width: 16rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #3F8CFF99, #FFD640);
+  color: white;
+  letter-spacing: 0.05rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registerButton:hover {
+  background: linear-gradient(to right, #3473D1, #D1AF34);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+
+}
+
+.actionBox {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.characterBox {
+  position: absolute;
+  bottom: -1.5rem;
+  right: 5%;
+  z-index: 1;
 }
