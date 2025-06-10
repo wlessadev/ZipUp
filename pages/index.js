@@ -113,7 +113,6 @@ export default function Home() {
             />
           </Box>
         </Box>
-
       </Box>
 
       <Box className={styles.characterBox}>
