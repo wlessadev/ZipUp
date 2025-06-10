@@ -162,6 +162,17 @@ export default function Cadastro() {
     
     if (key === 'nome') {
       valorFormatado = formatarNome(value);
+    } else if (key === 'email') {
+      if (window.innerWidth <= 425 && value && value.includes('@')) {
+        const [parte1, parte2] = value.split('@');
+        return (
+          <Box className={styles.emailBreak}>
+            <Box>{parte1}</Box>
+            <Box>@{parte2}</Box>
+          </Box>
+        );
+      }
+      return value || 'Não informado';
     } else if (key === 'celular') {
       valorFormatado = formatarCelular(value);
     } else if (key === 'dataNascimento') {
@@ -177,19 +188,30 @@ export default function Cadastro() {
 
   return (
     <Container maxWidth="100vw" className={styles.container}>
+      <Box className={styles.gradientLayerOne} />
+      <Box className={styles.gradientLayerTwo} />
+      <Box className={styles.gradientLayerThree} />
+      <Box className={styles.gradientLayerFour} />
+
       <Box className={styles.contentBox}>
-        <Typography variant="h3" gutterBottom className={styles.title}>
+        <div className={styles.title}>
           Cadastro de Usuário
-        </Typography>
+        </div>
 
         {!mostrarResumo ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
             <Grid container spacing={2} className={styles.formGrid}>
               <Grid item xs={12} sm={8}>
                 <Controller
                   name="nome"
                   control={control}
-                  rules={{ required: 'Nome é obrigatório' }}
+                  rules={{ 
+                    required: 'Nome é obrigatório',
+                    maxLength: {
+                      value: 100,
+                      message: 'Máximo de 100 caracteres'
+                    }
+                  }}
                   render={({ field }) => (
                     <TextField
                       {...field}
@@ -198,11 +220,12 @@ export default function Cadastro() {
                       required
                       error={!!errors.nome}
                       helperText={errors.nome?.message}
+                      inputProps={{ maxLength: 100 }}
                     />
                   )}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={8}>
                 <Controller
                   name="dataNascimento"
                   control={control}
@@ -247,6 +270,10 @@ export default function Cadastro() {
                   control={control}
                   rules={{ 
                     required: 'E-mail é obrigatório',
+                    maxLength: {
+                      value: 100,
+                      message: 'Máximo de 100 caracteres'
+                    },
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                       message: 'E-mail inválido'
@@ -261,6 +288,7 @@ export default function Cadastro() {
                       required
                       error={!!errors.email}
                       helperText={errors.email?.message}
+                      inputProps={{ maxLength: 100 }}
                     />
                   )}
                 />
@@ -304,56 +332,65 @@ export default function Cadastro() {
             <Grid container spacing={2} className={styles.formGrid}>
               <Grid item xs={12}>
                 <Box className={styles.cepContainer}>
-                  <Controller
-                    name="cep"
-                    control={control}
-                    rules={{ 
-                      required: 'CEP é obrigatório',
-                      minLength: {
-                        value: 9,
-                        message: 'CEP incompleto'
-                      }
-                    }}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        label="CEP"
-                        fullWidth
-                        required
-                        error={!!errors.cep || cepError}
-                        helperText={
-                          loadingCEP 
-                            ? 'Buscando endereço...' 
-                            : errors.cep?.message || 
-                              (cepError ? <span className={styles.errorText}>Não foi possível encontrar o CEP informado</span> : '')
-                        }
-                        InputProps={{
-                          endAdornment: loadingCEP ? <CircularProgress size={20} /> : null
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={8} md={6}>
+                      <Controller
+                        name="cep"
+                        control={control}
+                        rules={{ 
+                          required: 'CEP é obrigatório',
+                          minLength: {
+                            value: 9,
+                            message: 'CEP incompleto'
+                          },
+                          maxLength: {
+                            value: 9,
+                            message: 'CEP inválido'
+                          }
                         }}
-                        sx={{ flex: 1 }}
-                        inputProps={{ maxLength: 9 }}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          handleCEPChange(e);
-                        }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            label="CEP"
+                            fullWidth
+                            required
+                            error={!!errors.cep || cepError}
+                            helperText={
+                              loadingCEP 
+                                ? 'Buscando endereço...' 
+                                : errors.cep?.message || 
+                                  (cepError ? <span className={styles.errorText}>Não foi possível encontrar o CEP informado</span> : '')
+                            }
+                            InputProps={{
+                              endAdornment: loadingCEP ? <CircularProgress size={20} /> : null
+                            }}
+                            inputProps={{ maxLength: 9 }}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              handleCEPChange(e);
+                            }}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  <Button 
-                    variant="text" 
-                    color="primary"
-                    size="small"
-                    onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
-                    className={styles.cepButton}
-                  >
-                    Não sabe seu CEP? Clique aqui!
-                  </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={6}>
+                      <div 
+                        variant="text" 
+                        color="primary"
+                        size="small"
+                        onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
+                        className={styles.cepButton}
+                      >
+                        Não sabe seu CEP? Clique aqui!
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Box>
               </Grid>
             </Grid>
 
             <Grid container spacing={2} className={styles.formGrid}>
-              <Grid item xs={12} sm={8} md={6}>
+              <Grid item xs={12} sm={8} md={6} lg={5}>
                 <Controller
                   name="endereco"
                   control={control}
@@ -378,12 +415,16 @@ export default function Cadastro() {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={12}>
+              <Grid item xs={12} sm={2} md={2}>
                 <Controller
                   name="numero"
                   control={control}
                   rules={{ 
                     required: 'Número é obrigatório',
+                    maxLength: {
+                      value: 10,
+                      message: 'Máximo de 10 caracteres'
+                    },
                     pattern: {
                       value: /^[0-9]+$/,
                       message: 'Apenas números são permitidos'
@@ -399,7 +440,8 @@ export default function Cadastro() {
                       helperText={errors.numero?.message}
                       inputProps={{
                         inputMode: 'numeric',
-                        pattern: '[0-9]*'
+                        pattern: '[0-9]*',
+                        maxLength: 10
                       }}
                       onChange={(e) => {
                         const value = e.target.value.replace(/\D/g, '');
@@ -409,11 +451,15 @@ export default function Cadastro() {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={3} md={4}>
                 <Controller
                   name="complemento"
                   control={control}
                   rules={{
+                    maxLength: {
+                      value: 50,
+                      message: 'Máximo de 50 caracteres'
+                    },
                     validate: (value) => {
                       if (value && !/[a-zA-Z]/.test(value)) {
                         return 'O complemento deve conter pelo menos uma letra';
@@ -428,10 +474,15 @@ export default function Cadastro() {
                       fullWidth
                       error={!!errors.complemento}
                       helperText={errors.complemento?.message}
+                      inputProps={{ maxLength: 50 }}
                     />
                   )}
                 />
               </Grid>
+              
+            </Grid>
+
+            <Grid container spacing={2} className={styles.formGrid}>
               <Grid item xs={12} sm={12} md={4}>
                 <Controller
                   name="bairro"
@@ -457,9 +508,6 @@ export default function Cadastro() {
                   )}
                 />
               </Grid>
-            </Grid>
-
-            <Grid container spacing={2} className={styles.formGrid}>
               <Grid item xs={12} sm={8}>
                 <Controller
                   name="cidade"
@@ -513,22 +561,22 @@ export default function Cadastro() {
             </Grid>
 
             <Box className={styles.buttonGroup}>
-              <Button 
+              <div className={styles.backButton}
                 variant="outlined" 
                 color="secondary" 
                 onClick={handleBack}
-                className={styles.button}
               >
                 Voltar
-              </Button>
-              <Button 
+              </div>
+              <div 
                 type="submit" 
                 variant="contained" 
                 color="primary"
-                className={styles.button}
+                className={styles.continueButton}
+                onClick={handleSubmit(onSubmit)}
               >
                 Continuar
-              </Button>
+              </div>
             </Box>
           </form>
         ) : (
@@ -563,14 +611,13 @@ export default function Cadastro() {
               })}
             </Box>
             
-            <Button 
+            <div className={styles.backButton}
               variant="outlined" 
               color="secondary" 
               onClick={handleBack}
-              className={styles.button}
             >
               Voltar
-            </Button>
+            </div>
           </Box>
         )}
       </Box>
