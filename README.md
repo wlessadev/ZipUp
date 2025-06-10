@@ -1,4 +1,4 @@
-# ZipUp
+# 📍 ZipUp 🗺️
 
 Aplicação desenvolvida como parte do teste técnico para a vaga de Desenvolvedor Frontend Júnior na HBI (Leopoldina/MG).
 
