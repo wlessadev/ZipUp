@@ -4,13 +4,13 @@ Aplicação desenvolvida como parte do teste técnico para a vaga de Desenvolved
 
 ## 📌 Descrição
 
-ZipUp é uma aplicação web responsiva criada com Next.js 13.3.2. O objetivo do projeto é construir uma página de cadastro de usuário com preenchimento automático de endereço via API pública do ViaCEP. Além disso, foi desenvolvida uma versão mobile com React Native (Expo) como diferencial.
+ZipUp é uma aplicação web responsiva criada com Next.js 15.3.3. O objetivo do projeto é construir uma página de cadastro de usuário com preenchimento automático de endereço via API pública do ViaCEP. Além disso, foi desenvolvida uma versão mobile com React Native (Expo) como diferencial.
 
 ---
 
 ## ⚙️ Tecnologias Utilizadas
 
-- **Next.js 13.3.2** – Estrutura baseada em React com suporte nativo a rotas e renderização otimizada
+- **Next.js 15.3.3** – Estrutura baseada em React com suporte nativo a rotas e renderização otimizada
 - **React Hook Form** – Gerenciamento de formulários com performance e simplicidade
 - **Axios** – Requisições HTTP de forma simples e performática
 - **MUI (Material UI)** – Componentes visuais prontos, responsivos e personalizáveis
@@ -20,7 +20,7 @@ ZipUp é uma aplicação web responsiva criada com Next.js 13.3.2. O objetivo do
 
 ## 🧠 Escolhas Técnicas
 
-### ✔️ Next.js 13.3.2
+### ✔️ Next.js
 Escolhido por ser um diferencial proposto no teste e por oferecer uma estrutura robusta para desenvolvimento web moderno, com suporte à renderização no servidor e organização por rotas automáticas.
 
 ### ✔️ React Hook Form
