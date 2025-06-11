@@ -41,16 +41,17 @@ Escolhido por sua sintaxe simples, controle de erros embutido e ampla adoção n
   - Exibição da data atual
 
 - **Página de Cadastro**
-  - Campos: nome, e-mail, data de nascimento, celular, CEP, endereço, número, bairro, cidade e UF
-  - Preenchimento automático do endereço ao digitar o CEP
+  - Campos: nome, e-mail, data de nascimento, celular, CEP, endereço, número, complemento (opcional), bairro, cidade e UF
+  - Preenchimento automático do endereço, bairro, cidade e UF ao digitar o CEP
   - Validação do CEP com mensagens de erro se inválido
-  - Exibição do resumo dos dados cadastrados abaixo do formulário
+  - Exibição do resumo dos dados cadastrados no formulário
 
 ---
 
 ## 📱 Versão Mobile (Diferencial)
 
 Criada com **React Native (Expo)**, com tela de entrada de CEP e exibição dos dados de endereço vindos da API ViaCEP.
+Para acessar o projeto em React Native acesse o link: [ZipUp Mobile](https://github.com/wlessadev/zipup-mobile/)
 
 ---
 ## 👤 Autor
