@@ -9,16 +9,29 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(null);
   const [currentDate, setCurrentDate] = useState(null);
   const [isClient, setIsClient] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
+    setWindowWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
     const interval = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
       setCurrentDate(new Date().toLocaleDateString());
     }, 1000);
-    return () => clearInterval(interval);
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const handleRegisterClick = () => {
@@ -36,17 +49,17 @@ export default function Home() {
         <Box className={styles.headerBox}>
           <Box className={styles.titleGroup}>
             <div className={styles.titleText}>
-              Bem-vindo(a) ao&nbsp;
+              Bem-vindo(a) ao
             </div>
-            <Image 
-              src="/images/Logo_ZipUp.png"
-              alt="Logo do ZipUp"
-              width={120}
-              height={120}
-              style={{ objectFit: 'contain' }}
-            />
-            <div className={styles.titleText}>
-              &nbsp;!
+            <div className={styles.logoAndExclamation}>
+              <Image 
+                src="/images/Logo_ZipUp.png"
+                alt="Logo do ZipUp"
+                width={120}
+                height={120}
+                style={{ objectFit: 'contain' }}
+              />
+              <span className={styles.exclamation}>!</span>
             </div>
           </Box>
 
@@ -115,9 +128,11 @@ export default function Home() {
         </Box>
       </Box>
 
-      <Box className={styles.characterBox}>
-        <CartoonPresenter />
-      </Box>
+      {windowWidth >= 610 && (
+        <Box className={styles.characterBox}>
+          <CartoonPresenter />
+        </Box>
+      )}
     </Container>
 
   );
