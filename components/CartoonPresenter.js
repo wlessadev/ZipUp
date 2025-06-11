@@ -1,11 +1,10 @@
-// components/CartoonPresenter.js
 import { useState, useEffect } from 'react';
 import styles from '../styles/CartoonPresenter.module.css';
 
 export default function CartoonPresenter() {
   const [waveFrameIndex, setWaveFrameIndex] = useState(0);
-  
-  // Frames da animação (removidos os frames 8, 9 e 10)
+  const [imageSize, setImageSize] = useState(300); // tamanho padrão inicial
+
   const waveFrames = [
     '/images/cartoon-presenter/WagnerFrames1.png',
     '/images/cartoon-presenter/WagnerFrames2.png',
@@ -15,17 +14,46 @@ export default function CartoonPresenter() {
     '/images/cartoon-presenter/WagnerFrames7.png'
   ];
 
-  // Índices da animação ajustados para os frames disponíveis (0-5)
-  const animationIndices = [
-    0, 1, 2, 3, 4, 5, 4, 3, 2, 1
-  ];
+  const animationIndices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1];
 
-  // Animação de acenar
+  const calculatePresenterTransform = (targetWidth = 610) => {
+    const originalImageWidth = 1000;
+    const visibleCharacterWidth = 712;
+    const hiddenLeft = 288;
+
+    const scaleFactor = targetWidth / visibleCharacterWidth;
+    const scaledImageSize = originalImageWidth * scaleFactor;
+    const offsetX = hiddenLeft * scaleFactor;
+
+    return {
+      imageSize: scaledImageSize,
+      translateX: -offsetX,
+    };
+  };
+
+  const [translateX, setTranslateX] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      const targetWidth = Math.max(610, Math.min(712, screenWidth)); // limitar visual
+
+      const { imageSize, translateX } = calculatePresenterTransform(targetWidth);
+
+      setImageSize(imageSize);
+      setTranslateX(translateX);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   useEffect(() => {
     const interval = setInterval(() => {
       setWaveFrameIndex((prev) => (prev + 1) % animationIndices.length);
     }, 150);
-    
     return () => clearInterval(interval);
   }, []);
 
@@ -33,8 +61,12 @@ export default function CartoonPresenter() {
     <div className={styles.characterContainer}>
       <img 
         src={waveFrames[animationIndices[waveFrameIndex]]} 
-        alt="Apresentador Cartoon acenando" 
-        className={styles.character}
+        alt="Apresentador Cartoon acenando"
+        style={{ 
+          width: `${imageSize}px`, 
+          height: `${imageSize}px`,
+          transform: `translateX(${translateX}px)`
+        }}
       />
     </div>
   );

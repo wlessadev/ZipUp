@@ -166,7 +166,7 @@
 .characterBox {
   position: absolute;
   bottom: -1.5rem;
-  right: 5%;
+  right: -12rem;
   z-index: 1;
 }
 
