@@ -50,7 +50,7 @@ Escolhido por sua sintaxe simples, controle de erros embutido e ampla adoção n
 
 ## 📱 Versão Mobile (Diferencial)
 
-Criada com **React Native (Expo)**, com tela de entrada de CEP e exibição dos dados de endereço vindos da API ViaCEP.
+Criada com **React Native (Expo)**, com tela de entrada de CEP e exibição dos dados de endereço vindos da API ViaCEP. <br/>
 Para acessar o projeto em React Native acesse o link: [ZipUp Mobile](https://github.com/wlessadev/zipup-mobile/)
 
 ---
