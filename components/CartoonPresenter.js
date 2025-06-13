@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import styles from '../styles/CartoonPresenter.module.css';
 
+/**
+ * Componente que exibe um personagem cartoon animado (acenando)
+ * com responsividade para diferentes tamanhos de tela.
+ * 
+ * Características principais:
+ * - Animação suave usando sprites
+ * - Cálculo responsivo de tamanho e posição
+ * - Otimizado para performance com useEffect limpos
+ */
 export default function CartoonPresenter() {
   const [waveFrameIndex, setWaveFrameIndex] = useState(0);
   const [imageSize, setImageSize] = useState(300); // tamanho padrão inicial
@@ -16,6 +25,13 @@ export default function CartoonPresenter() {
 
   const animationIndices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1];
 
+  /**
+   * Calcula a transformação necessária para o personagem
+   * com base na largura desejada, mantendo proporções corretas
+   * 
+   * @param {number} targetWidth - Largura desejada para a área visível
+   * @returns {Object} Contendo imageSize e translateX calculados
+   */
   const calculatePresenterTransform = (targetWidth = 610) => {
     const originalImageWidth = 1000;
     const visibleCharacterWidth = 712;

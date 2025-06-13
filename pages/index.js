@@ -15,7 +15,7 @@ import CartoonPresenter from '../components/CartoonPresenter';
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(null);
   const [currentDate, setCurrentDate] = useState(null);
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Para SSR (Server-Side Rendering)
   const [windowWidth, setWindowWidth] = useState(0);
 
   const router = useRouter();
@@ -41,6 +41,10 @@ export default function Home() {
     };
   }, []);
 
+  /**
+   * Handler para navegação programática
+   * Encaminha o usuário para a página de cadastro
+   */
   const handleRegisterClick = () => {
     router.push('/cadastro');
   };

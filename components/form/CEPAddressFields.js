@@ -2,6 +2,7 @@ import { TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import styles from '../../styles/Cadastro.module.css';
 
+//componentes para campos os quais são preenchidos automaticamente após a busca do CEP
 export function EnderecoField({ control, errors }) {
   return (
     <Controller

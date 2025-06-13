@@ -16,11 +16,20 @@ export const emailValidation = {
     message: 'Máximo de 100 caracteres'
   },
   pattern: {
-    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+    // Regex que exige:
+    // - 3+ caracteres antes do @
+    // - Domínio com 2+ caracteres no TLD
+    value: /^[A-Z0-9._%+-]{3,}@[A-Z0-9.-]{3,}\.[A-Z]{2,}$/i,
     message: 'E-mail inválido'
   }
 };
 
+/**
+ * Validação complexa para nomes completos:
+ * - Verifica estrutura mínima (2 palavras significativas)
+ * - Gerencia partículas de nomes (de, da, van, etc.)
+ * - Impede palavras curtas não reconhecidas
+ */
 export const nomeValidation = {
   required: 'Nome é obrigatório',
   maxLength: {
@@ -63,6 +72,12 @@ export const nomeValidation = {
     return true;
   }
 };
+
+/**
+ * Validação para números de celular brasileiros:
+ * - Formato (XX) XXXX-XXXX ou (XX) 9XXXX-XXXX
+ * - Verificação de comprimento (10 ou 11 dígitos)
+ */
 export const celularValidation = {
   required: 'Celular é obrigatório',
   pattern: {
@@ -87,6 +102,11 @@ export const cepValidation = {
   }
 };
 
+/**
+ * Validação opcional para complemento:
+ * - Máximo de 50 caracteres
+ * - Exige pelo menos uma letra se preenchido
+ */
 export const complementoValidation = {
   maxLength: {
     value: 50,

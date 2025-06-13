@@ -29,6 +29,7 @@ import {
 } from '../components/form/UserAddressFields';
 
 export default function Cadastro() {
+  // Configuração do react-hook-form com valores iniciais
   const { control, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
       nome: '',
@@ -55,10 +56,18 @@ export default function Cadastro() {
   const [mostrarResumo, setMostrarResumo] = useState(false);
   const router = useRouter();
 
+  /**
+   * Validação customizada de data de nascimento
+   * @param {string} value - Data no formato string
+   */
   const handleDataChange = (value) => {
     setDataError(validateData(value));
   };
 
+  /**
+   * Busca automática de endereço via API dos Correios
+   * @param {string} cep - CEP a ser consultado (apenas dígitos)
+   */
   const fetchCEP = async (cep) => {
     if (cep.length !== 8) return;
     
@@ -70,6 +79,7 @@ export default function Cadastro() {
       const data = response.data;
       
       if (!data.erro) {
+        // Preenche automaticamente os campos de endereço
         setValue('endereco', data.logradouro || '');
         setValue('bairro', data.bairro || '');
         setValue('cidade', data.localidade || '');

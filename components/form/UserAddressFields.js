@@ -41,6 +41,12 @@ export const NumeroField = ({ control, errors }) => {
   );
 };
 
+/**
+ * Componente para campo de Complemento com:
+ * - Validação específica importada de utils/validations
+ * - Marcado claramente como opcional
+ * - Limite de caracteres adequado
+ */
 export const ComplementoField = ({ control, errors }) => {
   return (
     <Controller

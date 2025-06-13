@@ -2,6 +2,16 @@ import { Typography, Box } from '@mui/material';
 import styles from '../../styles/Cadastro.module.css';
 import { formatarResumo } from '../../utils/formatters';
 
+/**
+ * Componente para exibição do resumo dos dados do formulário, facilitando caso seja necessário adicionar mais campos no futuro.
+ * - Exibe todos os campos preenchidos em formato legível
+ * - Aplica formatação específica para cada tipo de dado
+ * - Oferece opção de voltar para edição
+ * 
+ * @param {Object} data - Dados do formulário a serem exibidos
+ * @param {Function} handleBack - Função para retornar à etapa anterior
+ */
+
 export default function ResumeDisplay({ data, handleBack }) {
   const labels = {
     nome: 'Nome',

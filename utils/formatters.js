@@ -1,3 +1,17 @@
+/**
+ * Função para formatação de valores de resumo de formulário
+ * 
+ * @param {string} key - Nome do campo a ser formatado
+ * @param {string} value - Valor do campo
+ * @returns {string|JSX.Element} Valor formatado ou componente JSX para emails quebrados
+ * 
+ * Responsabilidades:
+ * - Formata nomes próprios com capitalização correta
+ * - Formata números de celular e CEP
+ * - Adapta exibição de email para mobile
+ * - Padroniza exibição de dados não informados
+ */
+
 export function formatarResumo(key, value) {
   const formatarNome = (nome) => {
     if (!nome) return 'Não informado';
