@@ -11,7 +11,7 @@
  * - Adapta exibição de email para mobile
  * - Padroniza exibição de dados não informados
  */
-
+import {Box} from '@mui/material';
 export function formatarResumo(key, value) {
   const formatarNome = (nome) => {
     if (!nome) return 'Não informado';
